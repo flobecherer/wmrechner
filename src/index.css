@@ -1,0 +1,94 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    background-color: #d6d6d6;
+  }
+
+h1 {
+    text-align: center;
+}
+
+.tournament {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: [above] auto [below] auto;
+    grid-template-areas: 
+        "groupStage groupStage groupStage groupStage groupStage groupStage groupStage groupStage"
+        "stage stage stage stage";
+    grid-row-gap: 5px;
+}
+
+.groupStage {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "head"
+        "groupAD groupAD groupAD groupAD"
+        "groupEH groupEH groupEH groupEH";
+    grid-row-start: above;
+    grid-column-start: 1;
+    grid-column-end: 9;
+    border: 1px solid black;
+    background-color: #d1ebff;
+}
+
+.head {
+    text-align: center;
+    grid-row-start: 1;
+    grid-column: span 8;
+}
+
+.stage {
+    text-align: center;
+    border: 1px solid black;
+    background-color: #d1ebff;
+    grid-row-start: below;
+    grid-column: span 2;
+}
+
+.groupAD {
+    text-align: left;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+    grid-column: span 1;
+    grid-row-start: 2;
+}
+
+.groupEH {
+    text-align: left;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+    grid-column: span 1;
+    grid-row-start: 3;
+}
+
+.r16 {
+    text-align: left;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.qf {
+    text-align: left;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.sf {
+    text-align: left;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.f {
+    text-align: left;
+    margin: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
