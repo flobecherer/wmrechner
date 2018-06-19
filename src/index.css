@@ -1,5 +1,5 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    font: 16px "Calibri", Futura, sans-serif;
     background-color: #d6d6d6;
   }
 
@@ -63,6 +63,11 @@ h1 {
     border-radius: 5px;
     grid-column: span 1;
     grid-row-start: 3;
+}
+
+table {
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 .r16 {
