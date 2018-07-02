@@ -67,7 +67,26 @@ h1 {
 
 table {
     border: 1px solid black;
-    border-radius: 5px;
+    column-count: 7;
+    column-rule: 4px double 4px 4px 4px 8px 6px;
+}
+
+.roundrobin {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "games" "results";
+}
+
+.games {
+    text-align: left;
+    grid-column-start: 1;
+    line-height: 21px;
+}
+
+.results {
+    text-align: center;
+    grid-column-start: 2;
 }
 
 .r16 {
