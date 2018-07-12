@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
+//React-Component für das Einstellen der Ergebnisse für die Gruppenphase
 class Calculator extends React.Component {
   constructor() {
     super();
+    //home1 bezeichnet die Tore für das Heimteam im ersten Spiel, die anderen analog
     this.state = {
       home1: 0,
       away1: 0,
@@ -19,9 +21,11 @@ class Calculator extends React.Component {
       home6: 0,
       away6: 0
     };
+    //Hochzählen von home1. Funktionen für die andren Werte analog
     this.incrementHome1 = () => {
       this.setState(state => ({ home1: state.home1 + 1 }));
     };
+    //Runterzählen von home1. If-Schleife, damit Werte nicht negativ werden. Funktionen für die andren Werte analog
     this.decrementHome1 = () => {
       if (this.state.home1 > 0) {
         this.setState(state => ({ home1: state.home1 - 1 }));
@@ -157,6 +161,7 @@ class Calculator extends React.Component {
       away6
     } = this.state;
     return (
+      //Aufbau der React-Component
       <React.Fragment>
         <br />
         <button onClick={this.incrementHome1}>+</button>
@@ -193,6 +198,7 @@ class Calculator extends React.Component {
   }
 }
 
+//Analoges Component zu Calculator für einzelne Spiele
 class CalculatorSingleGame extends React.Component {
   constructor() {
     super();
@@ -232,9 +238,11 @@ class CalculatorSingleGame extends React.Component {
   }
 }
 
+//React-Component zur Darstellung und Berechnung der Tabellenwerte in der Gruppenphase
 class TableValues extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    //goals1, counterGoals1, goalDiff und points1 bezeichnen die Tore, Gegentore, Tordifferenz und die Punkte des ersten Teams, weitere Werte analog
     this.state = {
       goals1: 0,
       counterGoals1: 0,
@@ -253,6 +261,7 @@ class TableValues extends React.Component {
       goalDiff4: 0,
       points4: 0
     };
+    //Berechnung der Tabellenwerte von Team 1 basierend auf der Reihenfolge der Spiele in index.html, weitere Funktionen analog
     this.computeValues1 = () => {
       this.setState(state => ({
         goals1: (state.goals1 = state.home1 + state.home3 + state.home5),
@@ -307,8 +316,9 @@ class TableValues extends React.Component {
       points4
     } = this.state;
     return (
+      //Aufbau der Tabelle
       <React.Fragment>
-        {goals1} : {counterGoals1} {' '} {goalDiff1} {' '} {points1}
+        {goals1} : {counterGoals1} {goalDiff1} {points1}
         <br />
         {goals2} : {counterGoals2} {goalDiff2} {points2}
         <br />
@@ -320,6 +330,7 @@ class TableValues extends React.Component {
   }
 }
 
+//Einbinden der Components an den gewünschten Stellen im HTML-Dokument
 const domContainerA = document.querySelector("#resultsA");
 ReactDOM.render(React.createElement(Calculator), domContainerA);
 const domContainerB = document.querySelector("#resultsB");

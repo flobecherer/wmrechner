@@ -1,12 +1,15 @@
+/*Gesamte App*/
 body {
   font: 16px "Calibri", Futura, sans-serif;
   background-color: #d6d6d6;
 }
 
+/*Überschrift*/
 h1 {
   text-align: center;
 }
 
+/*gesamtes Turnier unter der Überschrift*/
 .tournament {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -17,6 +20,7 @@ h1 {
   grid-row-gap: 5px;
 }
 
+/*Gruppenphase*/
 .groupStage {
   text-align: center;
   display: grid;
@@ -33,12 +37,14 @@ h1 {
   background-color: #d1ebff;
 }
 
-.head {
+/*Überschrift Gruppenphase*/
+.headGroupStage {
   text-align: center;
   grid-row-start: 1;
   grid-column: span 8;
 }
 
+/*Turnierphase in der KO-Runde*/
 .stage {
   text-align: center;
   border: 1px solid black;
@@ -47,6 +53,7 @@ h1 {
   grid-column: span 2;
 }
 
+/*Gruppen A bis D*/
 .groupAD {
   text-align: left;
   margin: 3px;
@@ -56,6 +63,7 @@ h1 {
   grid-row-start: 2;
 }
 
+/*Gruppen E bis H*/
 .groupEH {
   text-align: left;
   margin: 3px;
@@ -65,42 +73,49 @@ h1 {
   grid-row-start: 3;
 }
 
+/*Tabelle innerhalb der Gruppe*/
 .table {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "countries" "values";
 }
 
+/*Linker Teil der Tabelle*/
 .countries {
   text-align: left;
   grid-column-start: 1;
   line-height: 21px;
 }
 
+/*Rechter Teil der Tabelle*/
 .values {
   text-align: center;
   grid-column-start: 2;
   line-height: 21px;
 }
 
+/*Spiele innerhalb der Gruppe*/
 .roundrobin {
   display: grid;
   grid-template-columns: 60% 40%;
   grid-template-areas: "games" "results";
 }
 
+/*Linker Teil der Spiele*/
 .games {
   text-align: left;
   grid-column-start: 1;
   line-height: 21px;
 }
 
+/*Rechter Teil der Spiele*/
 .results {
   text-align: center;
   grid-column-start: 2;
   line-height: 21px;
 }
 
+/*Spiele im Achtelfinale*/
 .r16 {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -111,6 +126,7 @@ h1 {
   border-radius: 5px;
 }
 
+/*Linker Teil des Spiels in stage (analog zu Spielen in der Gruppenphase)*/
 .stageGame {
   text-align: left;
   grid-column-start: 1;
@@ -118,12 +134,14 @@ h1 {
   line-height: 21px;
 }
 
+/*Rechter Teil des Spiels in stage (analog zu Spielen in der Gruppenphase)*/
 .stageResult {
   text-align: center;
   grid-column-start: 2;
   grid-row-start: 2;
 }
 
+/*Spiele im Viertelfinale*/
 .qf {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -134,6 +152,7 @@ h1 {
   border-radius: 5px;
 }
 
+/*Spiele im Halbfinale*/
 .sf {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -144,6 +163,7 @@ h1 {
   border-radius: 5px;
 }
 
+/*Spiele im Finale bzw Spiel um Platz 3*/
 .f {
   display: grid;
   grid-template-rows: 1fr 1fr;
