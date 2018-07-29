@@ -19,22 +19,105 @@ class Calculator extends React.Component {
       home5: 0,
       away5: 0,
       home6: 0,
-      away6: 0
+      away6: 0,
+      statePointsT1: 1,
+      statePointsT2: 1,
+      statePointsT3: 1,
+      statePointsT4: 1
     };
+    var home1var = 0;
+    var away1var = 0;
+    var home2var = 0;
+    var away2var = 0;
+    var home3var = 0;
+    var away3var = 0;
+    var home4var = 0;
+    var away4var = 0;
+    var home5var = 0;
+    var away5var = 0;
+    var home6var = 0;
+    var away6var = 0;
+    var pointsTeam1Game1 = 1;
+    var pointsTeam1Game2 = 1;
+    var pointsTeam1Game3 = 1;
+    var pointsTeam1 = 3;
+    var pointsTeam2Game1 = 1;
+    var pointsTeam2Game2 = 1;
+    var pointsTeam2Game3 = 1;
+    var pointsTeam2 = 3;
+    var pointsTeam3Game1 = 1;
+    var pointsTeam3Game2 = 1;
+    var pointsTeam3Game3 = 1;
+    var pointsTeam3 = 3;
+    var pointsTeam4Game1 = 1;
+    var pointsTeam4Game2 = 1;
+    var pointsTeam4Game3 = 1;
+    var pointsTeam4 = 3;
+    var homeGreaterAway1 = false;
+    var homeEqualAway1 = false;
+    var homeGreaterAway2 = false;
+    var homeEqualAway2 = false;
+    var homeGreaterAway3 = false;
+    var homeEqualAway3 = false;
+    var homeGreaterAway4 = false;
+    var homeEqualAway4 = false;
+    var homeGreaterAway5 = false;
+    var homeEqualAway5 = false;
+    var homeGreaterAway6 = false;
+    var homeEqualAway6 = false;
     //Hochzählen von home1. Funktionen für die andren Werte analog
     this.incrementHome1 = () => {
       this.setState(state => ({ home1: state.home1 + 1 }));
+      home1var = this.state.home1 + 1;
+      if (home1var > away1var) {
+        if (homeGreaterAway1 === false) {
+          homeGreaterAway1 = true;
+          homeEqualAway1 = false;
+          pointsTeam1Game1 = 0 + 3;
+          pointsTeam2Game1 = 0;
+        }
+      } else if (home1var === away1var) {
+        if (homeEqualAway1 === false) {
+          homeEqualAway1 = true;
+          pointsTeam1Game1 = 0 + 1;
+          pointsTeam2Game1 = 0 + 1;
+        }
+      }
+      pointsTeam1 = pointsTeam1Game1 + pointsTeam1Game2 + pointsTeam1Game3;
+      pointsTeam2 = pointsTeam2Game1 + pointsTeam2Game2 + pointsTeam2Game3;
+      this.setState(state => ({ statePointsT1: state.statePointsT1 = pointsTeam1}));
+      this.setState(state => ({ statePointsT2: state.statePointsT2 = pointsTeam2}));
     };
     //Runterzählen von home1. If-Schleife, damit Werte nicht negativ werden. Funktionen für die andren Werte analog
     this.decrementHome1 = () => {
       if (this.state.home1 > 0) {
         this.setState(state => ({ home1: state.home1 - 1 }));
+        home1var = this.state.home1 - 1;
       } else {
         this.setState(state => ({ home1: (state.home1 = 0) }));
+        home1var = 0;
       }
     };
     this.incrementAway1 = () => {
       this.setState(state => ({ away1: state.away1 + 1 }));
+      away1var = this.state.away1 + 1;
+      if (home1var < away1var) {
+        if (homeGreaterAway1 === true) {
+          homeEqualAway1 = false;
+          pointsTeam1Game1 = 0;
+          pointsTeam2Game1 = 0 + 3;
+        }
+      } else if (home1var === away1var) {
+        if (homeEqualAway1 === false) {
+          homeEqualAway1 = true;
+          pointsTeam1Game1 = 0 + 1;
+          pointsTeam2Game1 = 0 + 1;
+        }
+      }
+      pointsTeam1 = pointsTeam1Game1 + pointsTeam1Game2 + pointsTeam1Game3;
+      pointsTeam2 = pointsTeam2Game1 + pointsTeam2Game2 + pointsTeam2Game3;
+      this.setState(state => ({ statePointsT1: state.statePointsT1 = pointsTeam1}));
+      this.setState(state => ({ statePointsT2: state.statePointsT2 = pointsTeam2}));
     };
     this.decrementAway1 = () => {
       if (this.state.away1 > 0) {
@@ -45,6 +128,29 @@ class Calculator extends React.Component {
     };
     this.incrementHome2 = () => {
       this.setState(state => ({ home2: state.home2 + 1 }));
+      home2var = this.state.home2 + 1;
+      if (home2var > away2var) {
+        if (homeGreaterAway2 === false) {
+          homeGreaterAway2 = true;
+          homeEqualAway2 = false;
+          pointsTeam3Game1 = 0 + 3;
+          pointsTeam4Game1 = 0;
+        }
+      } else if (home2var === away2var) {
+        if (homeEqualAway2 === false) {
+          homeEqualAway2 = true;
+          pointsTeam3Game1 = 0 + 1;
+          pointsTeam4Game1 = 0 + 1;
+        }
+      }
+      pointsTeam3 = pointsTeam3Game1 + pointsTeam3Game2 + pointsTeam3Game3;
+      pointsTeam4 = pointsTeam4Game1 + pointsTeam4Game2 + pointsTeam4Game3;
+      this.setState(state => ({ statePointsT3: state.statePointsT3 = pointsTeam3}));
+      this.setState(state => ({ statePointsT4: state.statePointsT4 = pointsTeam4}));
+      /*console.log(pointsTeam1);
+      console.log(pointsTeam2);
+      console.log(pointsTeam3);
+      console.log(pointsTeam4);*/
     };
     this.decrementHome2 = () => {
       if (this.state.home2 > 0) {
@@ -143,6 +249,39 @@ class Calculator extends React.Component {
         this.setState(state => ({ away6: (state.away6 = 0) }));
       }
     };
+    /*this.pointsOfGame1 = () => {
+      //this.incrementHome1();
+      //this.setState(state => ({ home1: state.home1 + 1 }));
+      console.log(
+        "after inc1 home1: " + home1var,
+        "away1: " + this.state.away1
+      );
+      if (home1var > away1var) {
+        this.setState(state => ({ points1: state.pointsTeam1Game1 + 3 }));
+        pointsTeam1Game1 = pointsTeam1Game1 + 3;
+        console.log(
+          "if1 points1: " + pointsTeam1Game1,
+          "points2: " + pointsTeam2Game1
+        );
+      }
+      if (home1var === away1var) {
+        this.setState(state => ({
+          pointsTeam1Game1: state.pointsTeam1Game1 - 3 + 1,
+          pointsTeam2Game1: state.pointsTeam2Game1 - 3 + 1
+        }));
+        points1 = points1 + 1;
+        points2 = points2 + 1;
+        console.log("else if points1: " + points1, "points2: " + points2);
+      }
+      if (home1var < away1var) {
+        this.setState(state => ({ points2: state.points2 + 3 }));
+        points2 = points2 + 3;
+        console.log(
+          "else else points1: " + this.state.points1,
+          "points2: " + this.state.points2
+        );
+      }
+    };*/
   }
 
   render() {
@@ -158,7 +297,11 @@ class Calculator extends React.Component {
       home5,
       away5,
       home6,
-      away6
+      away6,
+      statePointsT1,
+      statePointsT2,
+      statePointsT3,
+      statePointsT4
     } = this.state;
     return (
       //Aufbau der React-Component
