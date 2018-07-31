@@ -20,6 +20,7 @@ class Calculator extends React.Component {
       away5: 0,
       home6: 0,
       away6: 0,
+      //statePoints zum Speichern der Punkte als state (evtl. für Übernahme der Gruppensieger notwendig)
       statePointsT1: 1,
       statePointsT2: 1,
       statePointsT3: 1,
@@ -89,6 +90,7 @@ class Calculator extends React.Component {
     //var secondMaxGoalDiff = 0;
     //var maxGoals = 0;
 
+    //compareGoalsX überprüft für Spiel X, welches Team wie viele Punkte erhält
     function compareGoals1() {
       if (home1var > away1var) {
         if (homeGreaterAway1 === false) {
@@ -227,6 +229,7 @@ class Calculator extends React.Component {
         }
       }
     }
+    //Berechnung der Summe der Punkte aus den drei Spielen pro Team
     function computeTable() {
       //goalsTeam1 = home1var + home3var + home5var;
       //goalsTeam2 = away1var + home4var + home6var;
@@ -248,14 +251,7 @@ class Calculator extends React.Component {
       Team2 = {/*Goals: goalsTeam2, negGoals: negGoalsTeam2, GoalDiff: goalDiffTeam2,*/ Points: pointsTeam2};
       Team3 = {/*Goals: goalsTeam3, negGoals: negGoalsTeam3, GoalDiff: goalDiffTeam3,*/ Points: pointsTeam3};
       Team4 = {/*Goals: goalsTeam4, negGoals: negGoalsTeam4, GoalDiff: goalDiffTeam4,*/ Points: pointsTeam4};
-      console.log("------------------");
-      console.log("Team1: " /*+ goalsTeam1 + "|" + negGoalsTeam1 + "|" + goalDiffTeam1 + "|"*/ + pointsTeam1);
-      console.log("Team2: " /*+ goalsTeam2 + "|" + negGoalsTeam2 + "|" + goalDiffTeam2 + "|"*/ + pointsTeam2);
-      console.log("Team3: " /*+ goalsTeam3 + "|" + negGoalsTeam3 + "|" + goalDiffTeam3 + "|"*/ + pointsTeam3);
-      console.log("Team4: " /*+ goalsTeam4 + "|" + negGoalsTeam4 + "|" + goalDiffTeam4 + "|"*/ + pointsTeam4);
-      console.log("---------------------------");
       maximumPoints = Math.max(Team1.Points, Team2.Points, Team3.Points, Team4.Points);
-      console.log("maxPoint: " + maximumPoints);
       if (maximumPoints === pointsTeam1) {
         groupWinner = "Russland";
       } else if (maximumPoints === pointsTeam2) {
@@ -301,7 +297,7 @@ class Calculator extends React.Component {
         }
       } */  
     }
-    //Hochzählen von home1. Funktionen für die andren Werte analog
+    //Hochzählen von home1 und direkte Berechnung der Punkte über externe Funktionen. Funktionen für die anderen Werte analog
     this.incrementHome1 = () => {
       this.setState(state => ({ home1: state.home1 + 1 }));
       home1var = this.state.home1 + 1;
@@ -310,7 +306,7 @@ class Calculator extends React.Component {
       this.setState(state => ({ statePointsT1: state.statePointsT1 = pointsTeam1}));
       this.setState(state => ({ statePointsT2: state.statePointsT2 = pointsTeam2}));
     };
-    //Runterzählen von home1. If-Schleife, damit Werte nicht negativ werden. Funktionen für die andren Werte analog
+    //Runterzählen von home1 und direkte Berechnung der Punkte über externe Funktionen. If-Schleife, damit Werte nicht negativ werden. Funktionen für die anderen Werte analog
     this.decrementHome1 = () => {
       if (this.state.home1 > 0) {
         this.setState(state => ({ home1: state.home1 - 1 }));
