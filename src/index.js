@@ -2,14 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { computeTable } from "./calcPoints.js";
-import {
-  compareGoals1,
-  compareGoals2,
-  compareGoals3,
-  compareGoals4,
-  compareGoals5,
-  compareGoals6
-} from "./compareGoals.js";
+import { compareGoals } from "./compareGoals.js";
+import { getWinner } from "./getWinner.js";
 
 //React-Component für das Einstellen der Ergebnisse für die Gruppenphase
 class Calculator extends React.Component {
@@ -28,12 +22,12 @@ class Calculator extends React.Component {
       home5: 0,
       away5: 0,
       home6: 0,
-      away6: 0,
+      away6: 0
       //statePoints zum Speichern der Punkte als state (evtl. für Übernahme der Gruppensieger notwendig)
-      statePointsT1: 1,
-      statePointsT2: 1,
-      statePointsT3: 1,
-      statePointsT4: 1
+      //statePointsT1: 1,
+      //statePointsT2: 1,
+      //statePointsT3: 1,
+      //statePointsT4: 1
     };
     var home1var = 0;
     var away1var = 0;
@@ -47,50 +41,24 @@ class Calculator extends React.Component {
     var away5var = 0;
     var home6var = 0;
     var away6var = 0;
-    var pointsTeam1Game1 = 1;
-    var pointsTeam1Game2 = 1;
-    var pointsTeam1Game3 = 1;
-    var pointsTeam1 = 3;
-    var pointsTeam2Game1 = 1;
-    var pointsTeam2Game2 = 1;
-    var pointsTeam2Game3 = 1;
-    var pointsTeam2 = 3;
-    var pointsTeam3Game1 = 1;
-    var pointsTeam3Game2 = 1;
-    var pointsTeam3Game3 = 1;
-    var pointsTeam3 = 3;
-    var pointsTeam4Game1 = 1;
-    var pointsTeam4Game2 = 1;
-    var pointsTeam4Game3 = 1;
-    var pointsTeam4 = 3;
+    var result1 = {scoreAway: 0, scoreHome: 0};
+    var result2 = {scoreAway: 0, scoreHome: 0};
+    var result3 = {scoreAway: 0, scoreHome: 0};
+    var result4 = {scoreAway: 0, scoreHome: 0};
+    var result5 = {scoreAway: 0, scoreHome: 0};
+    var result6 = {scoreAway: 0, scoreHome: 0};
+    var winner;
+    var allPoints;
 
     //Hochzählen von home1 und direkte Berechnung der Punkte über externe Funktionen. Funktionen für die anderen Werte analog
     this.incrementHome1 = () => {
       this.setState(state => ({ home1: state.home1 + 1 }));
       home1var = this.state.home1 + 1;
-      compareGoals1(home1var, away1var, pointsTeam1Game1, pointsTeam2Game1);
-      //TODO: Falsche Werte der points variablen bei erneutem Aufruf
-      computeTable(
-        pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      return { home1var, pointsTeam1, pointsTeam2 };
+      result1 = compareGoals(home1var, away1var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
+      console.log(winner);
+      console.log(winner.A, winner.B, winner.C);
     };
     //Runterzählen von home1 und direkte Berechnung der Punkte über externe Funktionen. If-Schleife, damit Werte nicht negativ werden. Funktionen für die anderen Werte analog
     this.decrementHome1 = () => {
@@ -101,54 +69,16 @@ class Calculator extends React.Component {
         this.setState(state => ({ home1: (state.home1 = 0) }));
         home1var = 0;
       }
-      compareGoals1(home1var, away1var, pointsTeam1Game1, pointsTeam2Game1);
-      computeTable(
-        pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      return { home1var, pointsTeam1, pointsTeam2 };
+      result1 = compareGoals(home1var, away1var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementAway1 = () => {
       this.setState(state => ({ away1: state.away1 + 1 }));
       away1var = this.state.away1 + 1;
-      compareGoals1(home1var, away1var, /*pointsTeam1Game1, pointsTeam2Game1*/);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      return { home1var, pointsTeam1, pointsTeam2 };
+      result1 = compareGoals(home1var, away1var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementAway1 = () => {
       if (this.state.away1 > 0) {
@@ -158,53 +88,16 @@ class Calculator extends React.Component {
         this.setState(state => ({ away1: (state.away1 = 0) }));
         away1var = 0;
       }
-      compareGoals1(home1var, away1var, /*pointsTeam1Game1, pointsTeam2Game1*/);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      return { home1var, pointsTeam1, pointsTeam2 };
+      result1 = compareGoals(home1var, away1var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementHome2 = () => {
       this.setState(state => ({ home2: state.home2 + 1 }));
       home2var = this.state.home2 + 1;
-      compareGoals2(home2var, away2var, pointsTeam3Game1, pointsTeam4Game1);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      result2 = compareGoals(home2var, away2var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementHome2 = () => {
       if (this.state.home2 > 0) {
@@ -214,52 +107,16 @@ class Calculator extends React.Component {
         this.setState(state => ({ home2: (state.home2 = 0) }));
         home2var = 0;
       }
-      compareGoals2(home2var, away2var, pointsTeam3Game1, pointsTeam4Game1);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      result2 = compareGoals(home2var, away2var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementAway2 = () => {
       this.setState(state => ({ away2: state.away2 + 1 }));
       away2var = this.state.away2 + 1;
-      compareGoals2(home2var, away2var, pointsTeam3Game1, pointsTeam4Game1);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      result2 = compareGoals(home2var, away2var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementAway2 = () => {
       if (this.state.away2 > 0) {
@@ -269,52 +126,16 @@ class Calculator extends React.Component {
         this.setState(state => ({ away2: (state.away2 = 0) }));
         away2var = 0;
       }
-      compareGoals2(home2var, away2var, pointsTeam3Game1, pointsTeam4Game1);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      result2 = compareGoals(home2var, away2var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementHome3 = () => {
       this.setState(state => ({ home3: state.home3 + 1 }));
-      home3var = this.state.home3 + 1;
-      compareGoals3(home3var, away3var, pointsTeam1Game2, pointsTeam3Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      home3var = this.state.home3 + 1;      
+      result3 = compareGoals(home3var, away3var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementHome3 = () => {
       if (this.state.home3 > 0) {
@@ -323,53 +144,17 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ home3: (state.home3 = 0) }));
         home3var = 0;
-      }
-      compareGoals3(home3var, away3var, pointsTeam1Game2, pointsTeam3Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      }      
+      result3 = compareGoals(home3var, away3var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementAway3 = () => {
       this.setState(state => ({ away3: state.away3 + 1 }));
-      away3var = this.state.away3 + 1;
-      compareGoals3(home3var, away3var, pointsTeam1Game2, pointsTeam3Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      away3var = this.state.away3 + 1;      
+      result3 = compareGoals(home3var, away3var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementAway3 = () => {
       if (this.state.away3 > 0) {
@@ -378,53 +163,17 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ away3: (state.away3 = 0) }));
         away3var = 0;
-      }
-      compareGoals3(home3var, away3var, pointsTeam1Game2, pointsTeam3Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      }      
+      result3 = compareGoals(home3var, away3var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementHome4 = () => {
       this.setState(state => ({ home4: state.home4 + 1 }));
-      home4var = this.state.home4 + 1;
-      compareGoals4(home4var, away4var, pointsTeam2Game2, pointsTeam4Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      home4var = this.state.home4 + 1;      
+      result4 = compareGoals(home4var, away4var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementHome4 = () => {
       if (this.state.home4 > 0) {
@@ -433,53 +182,17 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ home4: (state.home4 = 0) }));
         home4var = 0;
-      }
-      compareGoals4(home4var, away4var, pointsTeam2Game2, pointsTeam4Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      }      
+      result4 = compareGoals(home4var, away4var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementAway4 = () => {
       this.setState(state => ({ away4: state.away4 + 1 }));
-      away4var = this.state.away4 + 1;
-      compareGoals4(home4var, away4var, pointsTeam2Game2, pointsTeam4Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      away4var = this.state.away4 + 1;      
+      result4 = compareGoals(home4var, away4var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementAway4 = () => {
       if (this.state.away4 > 0) {
@@ -488,53 +201,17 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ away4: (state.away4 = 0) }));
         away4var = 0;
-      }
-      compareGoals4(home4var, away4var, pointsTeam2Game2, pointsTeam4Game2);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      }      
+      result4 = compareGoals(home4var, away4var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementHome5 = () => {
       this.setState(state => ({ home5: state.home5 + 1 }));
-      home5var = this.state.home5 + 1;
-      compareGoals5(home5var, away5var, pointsTeam1Game3, pointsTeam4Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      home5var = this.state.home5 + 1;      
+      result5 = compareGoals(home5var, away5var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementHome5 = () => {
       if (this.state.home5 > 0) {
@@ -543,53 +220,17 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ home5: (state.home5 = 0) }));
         home5var = 0;
-      }
-      compareGoals5(home5var, away5var, pointsTeam1Game3, pointsTeam4Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      }      
+      result5 = compareGoals(home5var, away5var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementAway5 = () => {
       this.setState(state => ({ away5: state.away5 + 1 }));
-      away5var = this.state.away5 + 1;
-      compareGoals5(home5var, away5var, pointsTeam1Game3, pointsTeam4Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      away5var = this.state.away5 + 1;      
+      result5 = compareGoals(home5var, away5var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementAway5 = () => {
       if (this.state.away5 > 0) {
@@ -598,53 +239,17 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ away5: (state.away5 = 0) }));
         away5var = 0;
-      }
-      compareGoals5(home5var, away5var, pointsTeam1Game3, pointsTeam4Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT1: (state.statePointsT1 = pointsTeam1)
-      }));
-      this.setState(state => ({
-        statePointsT4: (state.statePointsT4 = pointsTeam4)
-      }));
+      }      
+      result5 = compareGoals(home5var, away5var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementHome6 = () => {
       this.setState(state => ({ home6: state.home6 + 1 }));
-      home6var = this.state.home6 + 1;
-      compareGoals6(home6var, away6var, pointsTeam2Game3, pointsTeam3Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      home6var = this.state.home6 + 1;      
+      result6 = compareGoals(home6var, away6var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementHome6 = () => {
       if (this.state.home6 > 0) {
@@ -653,53 +258,17 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ home6: (state.home6 = 0) }));
         home6var = 0;
-      }
-      compareGoals6(home6var, away6var, pointsTeam2Game3, pointsTeam3Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      }      
+      result6 = compareGoals(home6var, away6var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.incrementAway6 = () => {
       this.setState(state => ({ away6: state.away6 + 1 }));
-      away6var = this.state.away6 + 1;
-      compareGoals6(home6var, away6var, pointsTeam2Game3, pointsTeam3Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      away6var = this.state.away6 + 1;      
+      result6 = compareGoals(home6var, away6var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
     this.decrementAway6 = () => {
       if (this.state.away6 > 0) {
@@ -708,32 +277,12 @@ class Calculator extends React.Component {
       } else {
         this.setState(state => ({ away6: (state.away6 = 0) }));
         away6var = 0;
-      }
-      compareGoals6(home6var, away6var, pointsTeam2Game3, pointsTeam3Game3);
-      computeTable(
-        //pointsTeam1Game1,
-        pointsTeam1Game2,
-        pointsTeam1Game3,
-        //pointsTeam2Game1,
-        pointsTeam2Game2,
-        pointsTeam2Game3,
-        pointsTeam3Game1,
-        pointsTeam3Game2,
-        pointsTeam3Game3,
-        pointsTeam4Game1,
-        pointsTeam4Game2,
-        pointsTeam4Game3
-      );
-      this.setState(state => ({
-        statePointsT2: (state.statePointsT2 = pointsTeam2)
-      }));
-      this.setState(state => ({
-        statePointsT3: (state.statePointsT3 = pointsTeam3)
-      }));
+      }      
+      result6 = compareGoals(home6var, away6var);
+      allPoints = computeTable(result1, result2, result3, result4, result5, result6);
+      winner = getWinner(allPoints);
     };
   }
-
-
 
   render() {
     const {
@@ -748,11 +297,11 @@ class Calculator extends React.Component {
       home5,
       away5,
       home6,
-      away6,
-      statePointsT1,
-      statePointsT2,
-      statePointsT3,
-      statePointsT4
+      away6
+      //statePointsT1,
+      //statePointsT2,
+      //statePointsT3,
+      //statePointsT4
     } = this.state;
     return (
       //Aufbau der React-Component

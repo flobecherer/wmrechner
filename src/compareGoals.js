@@ -1,51 +1,21 @@
-var homeGreaterAway1 = false;
-var homeEqualAway1 = false;
-var homeGreaterAway2 = false;
-var homeEqualAway2 = false;
-var homeGreaterAway3 = false;
-var homeEqualAway3 = false;
-var homeGreaterAway4 = false;
-var homeEqualAway4 = false;
-var homeGreaterAway5 = false;
-var homeEqualAway5 = false;
-var homeGreaterAway6 = false;
-var homeEqualAway6 = false;
-//compareGoalsX überprüft für Spiel X, welches Team wie viele Punkte erhält
-export function compareGoals1(
-  home1var,
-  away1var,
-  pointsTeam1Game1,
-  pointsTeam2Game1
-) {
-  if (home1var > away1var) {
-    if (homeGreaterAway1 === false) {
-      homeGreaterAway1 = true;
-      homeEqualAway1 = false;
-      pointsTeam1Game1 = 0 + 3;
-      pointsTeam2Game1 = 0;
-    }
-  } else if (home1var === away1var) {
-    if (homeEqualAway1 === false) {
-      homeEqualAway1 = true;
-      homeGreaterAway1 = false;
-      pointsTeam1Game1 = 0 + 1;
-      pointsTeam2Game1 = 0 + 1;
-    }
-  } else if (home1var < away1var) {
-    if (homeGreaterAway1 === false) {
-      homeEqualAway1 = false;
-      pointsTeam1Game1 = 0;
-      pointsTeam2Game1 = 0 + 3;
-    }
+/**
+* calculates the score from the result of a game
+* @param {number} home goals shot by home team
+* @param {number} away goals shot by away team
+* @returns {{scoreAway: number, scoreHome: number}}
+*/
+
+//compareGoals überprüft, welches Team wie viele Punkte erhält
+export function compareGoals(home, away) {
+  if (home > away) {
+      return { scoreHome: 3, scoreAway: 0 };
+  } else if (home === away) {
+      return { scoreHome: 1, scoreAway: 1 };    
+  } else if (home < away) {
+      return { scoreHome: 0, scoreAway: 3 };    
   }
-  return { pointsTeam1Game1, pointsTeam2Game1 };
 }
-export function compareGoals2(
-  home2var,
-  away2var,
-  pointsTeam3Game1,
-  pointsTeam4Game1
-) {
+/*export function compareGoals2(home2var, away2var, pointsTeam3Game1, pointsTeam4Game1) {
   if (home2var > away2var) {
     if (homeGreaterAway2 === false) {
       homeGreaterAway2 = true;
@@ -69,12 +39,7 @@ export function compareGoals2(
   }
   return { pointsTeam3Game1, pointsTeam4Game1 };
 }
-export function compareGoals3(
-  home3var,
-  away3var,
-  pointsTeam1Game2,
-  pointsTeam3Game2
-) {
+export function compareGoals3(home3var, away3var, pointsTeam1Game2, pointsTeam3Game2) {
   if (home3var > away3var) {
     if (homeGreaterAway3 === false) {
       homeGreaterAway3 = true;
@@ -98,12 +63,7 @@ export function compareGoals3(
   }
   return { pointsTeam1Game2, pointsTeam3Game2 };
 }
-export function compareGoals4(
-  home4var,
-  away4var,
-  pointsTeam2Game2,
-  pointsTeam4Game2
-) {
+export function compareGoals4(home4var, away4var, pointsTeam2Game2, pointsTeam4Game2) {
   if (home4var > away4var) {
     if (homeGreaterAway4 === false) {
       homeGreaterAway4 = true;
@@ -127,12 +87,7 @@ export function compareGoals4(
   }
   return { pointsTeam2Game2, pointsTeam4Game2 };
 }
-export function compareGoals5(
-  home5var,
-  away5var,
-  pointsTeam1Game3,
-  pointsTeam4Game3
-) {
+export function compareGoals5(home5var, away5var, pointsTeam1Game3, pointsTeam4Game3) {
   if (home5var > away5var) {
     if (homeGreaterAway5 === false) {
       homeGreaterAway5 = true;
@@ -156,12 +111,7 @@ export function compareGoals5(
   }
   return { pointsTeam1Game3, pointsTeam4Game3 };
 }
-export function compareGoals6(
-  home6var,
-  away6var,
-  pointsTeam2Game3,
-  pointsTeam3Game3
-) {
+export function compareGoals6(home6var, away6var, pointsTeam2Game3, pointsTeam3Game3) {
   if (home6var > away6var) {
     if (homeGreaterAway6 === false) {
       homeGreaterAway6 = true;
@@ -184,4 +134,4 @@ export function compareGoals6(
     }
   }
   return { pointsTeam2Game3, pointsTeam3Game3 };
-}
+}*/

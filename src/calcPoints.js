@@ -1,3 +1,14 @@
+/**
+* calculates the overall score from the teams of the group
+* @param {object} result1 points of team 1
+* @param {object} result2 points of team 2
+* @param {object} result3 points of team 3
+* @param {object} result4 points of team 4
+* @param {object} result5 points of team 5
+* @param {object} result6 points of team 6
+* @returns {{scoreTeam1: number, scoreTeam2: number, scoreTeam3: number, scoreTeam4: number, groupwinner: string}}
+*/
+
 var pointsTeam1 = 3;
 var pointsTeam2 = 3;
 var pointsTeam3 = 3;
@@ -23,19 +34,7 @@ var maximumPoints = 0;
 //var maxGoals = 0;
 
 //Berechnung der Summe der Punkte aus den drei Spielen pro Team
-export function computeTable(
-  pointsTeam1Game1,
-  pointsTeam1Game2,
-  pointsTeam1Game3,
-  pointsTeam2Game1,
-  pointsTeam2Game2,
-  pointsTeam2Game3,
-  pointsTeam3Game1,
-  pointsTeam3Game2,
-  pointsTeam3Game3,
-  pointsTeam4Game1,
-  pointsTeam4Game2,
-  pointsTeam4Game3) {
+export function computeTable(result1, result2, result3, result4, result5, result6) {
   //console.log("pointsT1G1: " + pointsTeam1Game1);
   //goalsTeam1 = home1var + home3var + home5var;
   //goalsTeam2 = away1var + home4var + home6var;
@@ -49,27 +48,22 @@ export function computeTable(
   //goalDiffTeam2 = goalsTeam2 - negGoalsTeam2;
   //goalDiffTeam3 = goalsTeam3 - negGoalsTeam3;
   //goalDiffTeam4 = goalsTeam4 - negGoalsTeam4;
-  pointsTeam1 = pointsTeam1Game1 + pointsTeam1Game2 + pointsTeam1Game3;
-  pointsTeam2 = pointsTeam2Game1 + pointsTeam2Game2 + pointsTeam2Game3;
-  pointsTeam3 = pointsTeam3Game1 + pointsTeam3Game2 + pointsTeam3Game3;
-  pointsTeam4 = pointsTeam4Game1 + pointsTeam4Game2 + pointsTeam4Game3;
-  maximumPoints = Math.max(
-    pointsTeam1,
-    pointsTeam2,
-    pointsTeam3,
-    pointsTeam4
-  );
+  pointsTeam1 = result1.scoreHome + result3.scoreHome + result5.scoreHome;
+  pointsTeam2 = result1.scoreAway + result4.scoreHome + result6.scoreHome;
+  pointsTeam3 = result2.scoreHome + result3.scoreAway + result6.scoreAway;
+  pointsTeam4 = result2.scoreAway + result4.scoreAway + result5.scoreAway;
+  maximumPoints = Math.max(pointsTeam1, pointsTeam2, pointsTeam3, pointsTeam4);
   //Bestimmung des Gruppensiegers (states für verschiedene Gruppen fehlen noch)
   if (maximumPoints === pointsTeam1) {
-    groupWinner = "Russland";
+    groupWinner = "Team1";
   } else if (maximumPoints === pointsTeam2) {
-    groupWinner = "Saudi-Arabien";
+    groupWinner = "Team2";
   } else if (maximumPoints === pointsTeam3) {
-    groupWinner = "Ägypten";
+    groupWinner = "Team3";
   } else if (maximumPoints === pointsTeam4) {
-    groupWinner = "Uruguay";
+    groupWinner = "Team4";
   }
-  console.log("Sieger A: " + groupWinner);
+  return({ scoreTeam1: pointsTeam1, scoreTeam2: pointsTeam2, scoreTeam3: pointsTeam3, scoreTeam4: pointsTeam4, groupwinner: groupWinner});
   /*if (Team1.Points <= maximumPoints && Team2.Points <= maximumPoints && Team3.Points <= maximumPoints) {
       secondMaxPoints = Math.max(Team1.Points, Team2.Points, Team3.Points);
     }
