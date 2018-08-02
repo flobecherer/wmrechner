@@ -4,6 +4,7 @@ import "./index.css";
 import { computeTable } from "./calcPoints.js";
 import { compareGoals, compareGoalsKO } from "./compareGoals.js";
 import { getWinner } from "./getWinner.js";
+import { GroupPhase } from "./GroupStage";
 
 //React-Component für das Einstellen der Ergebnisse für die Gruppenphase
 class Calculator extends React.Component {
@@ -71,7 +72,6 @@ class Calculator extends React.Component {
       result1 = compareGoals(home1var, away1var);
       allPoints = computeTable(result1, result2, result3, result4, result5, result6);
       winner = getWinner(allPoints);
-      console.log(allPoints);
     };
     this.incrementAway1 = () => {
       this.setState(state => ({ away1: state.away1 + 1 }));
@@ -301,7 +301,7 @@ class Calculator extends React.Component {
       home6,
       away6
     } = this.state;
-    return (
+    return ( 
       //Aufbau der React-Component
       <React.Fragment>
         <br />
@@ -457,9 +457,10 @@ class TableValues extends React.Component {
     );
   }
 }
+ReactDOM.render(<GroupPhase />, document.getElementById("root"));
 
 //Einbinden der Components an den gewünschten Stellen im HTML-Dokument
-const domContainerA = document.querySelector("#resultsA");
+/*const domContainerA = document.querySelector("#resultsA");
 ReactDOM.render(React.createElement(Calculator), domContainerA);
 const domContainerB = document.querySelector("#resultsB");
 ReactDOM.render(React.createElement(Calculator), domContainerB);
@@ -530,4 +531,4 @@ const domContainerValueH = document.querySelector("#valuesH");
 ReactDOM.render(React.createElement(TableValues), domContainerValueH);
 
 //const domContainerCountriesA = document.querySelector("#countriesA");
-//ReactDOM.render(React.createElement(),domContainerCountriesA);
+//ReactDOM.render(React.createElement(),domContainerCountriesA);*/
