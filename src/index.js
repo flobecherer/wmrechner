@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { computeTable } from "./calcPoints.js";
-import { compareGoals } from "./compareGoals.js";
+import { compareGoals, compareGoalsKO } from "./compareGoals.js";
 import { getWinner } from "./getWinner.js";
 
 //React-Component für das Einstellen der Ergebnisse für die Gruppenphase
 class Calculator extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     //home1 bezeichnet die Tore für das Heimteam im ersten Spiel, die anderen analog
     this.state = {
       home1: 0,
@@ -57,8 +57,7 @@ class Calculator extends React.Component {
       result1 = compareGoals(home1var, away1var);
       allPoints = computeTable(result1, result2, result3, result4, result5, result6);
       winner = getWinner(allPoints);
-      console.log(winner);
-      console.log(winner.A, winner.B, winner.C);
+      console.log(allPoints);
     };
     //Runterzählen von home1 und direkte Berechnung der Punkte über externe Funktionen. If-Schleife, damit Werte nicht negativ werden. Funktionen für die anderen Werte analog
     this.decrementHome1 = () => {
@@ -72,6 +71,7 @@ class Calculator extends React.Component {
       result1 = compareGoals(home1var, away1var);
       allPoints = computeTable(result1, result2, result3, result4, result5, result6);
       winner = getWinner(allPoints);
+      console.log(allPoints);
     };
     this.incrementAway1 = () => {
       this.setState(state => ({ away1: state.away1 + 1 }));
@@ -79,6 +79,7 @@ class Calculator extends React.Component {
       result1 = compareGoals(home1var, away1var);
       allPoints = computeTable(result1, result2, result3, result4, result5, result6);
       winner = getWinner(allPoints);
+      console.log(allPoints);
     };
     this.decrementAway1 = () => {
       if (this.state.away1 > 0) {
@@ -91,6 +92,7 @@ class Calculator extends React.Component {
       result1 = compareGoals(home1var, away1var);
       allPoints = computeTable(result1, result2, result3, result4, result5, result6);
       winner = getWinner(allPoints);
+      console.log(allPoints);
     };
     this.incrementHome2 = () => {
       this.setState(state => ({ home2: state.home2 + 1 }));
@@ -298,10 +300,6 @@ class Calculator extends React.Component {
       away5,
       home6,
       away6
-      //statePointsT1,
-      //statePointsT2,
-      //statePointsT3,
-      //statePointsT4
     } = this.state;
     return (
       //Aufbau der React-Component
@@ -346,25 +344,43 @@ class CalculatorSingleGame extends React.Component {
   constructor() {
     super();
     this.state = { home1: 0, away1: 0 };
+
+    var homeVar = 0;
+    var awayVar = 0;
+    var result;
     this.incrementHome1 = () => {
       this.setState(state => ({ home1: state.home1 + 1 }));
+      homeVar = this.state.home1 + 1;
+      result = compareGoalsKO(homeVar, awayVar);
+      console.log(result);
     };
     this.decrementHome1 = () => {
       if (this.state.home1 > 0) {
         this.setState(state => ({ home1: state.home1 - 1 }));
+        homeVar = this.state.home1 - 1;
       } else {
         this.setState(state => ({ home1: (state.home1 = 0) }));
+        homeVar = 0;
       }
+      result = compareGoalsKO(homeVar, awayVar);
+      console.log(result);
     };
     this.incrementAway1 = () => {
       this.setState(state => ({ away1: state.away1 + 1 }));
+      awayVar = this.state.away1 + 1;
+      result = compareGoalsKO(homeVar, awayVar);
+      console.log(result);
     };
     this.decrementAway1 = () => {
       if (this.state.away1 > 0) {
         this.setState(state => ({ away1: state.away1 - 1 }));
+        awayVar = this.state.away1 - 1;
       } else {
         this.setState(state => ({ away1: (state.away1 = 0) }));
+        awayVar = 0;
       }
+      result = compareGoalsKO(homeVar, awayVar);
+      console.log(result);
     };
   }
 
@@ -383,8 +399,8 @@ class CalculatorSingleGame extends React.Component {
 
 //React-Component zur Darstellung und Berechnung der Tabellenwerte in der Gruppenphase
 class TableValues extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     //goals1, counterGoals1, goalDiff und points1 bezeichnen die Tore, Gegentore, Tordifferenz und die Punkte des ersten Teams, weitere Werte analog
     this.state = {
       goals1: 0,
@@ -404,39 +420,8 @@ class TableValues extends React.Component {
       goalDiff4: 0,
       points4: 0
     };
-    //Berechnung der Tabellenwerte von Team 1 basierend auf der Reihenfolge der Spiele in index.html, weitere Funktionen analog
-    this.computeValues1 = () => {
-      this.setState(state => ({
-        goals1: (state.goals1 = state.home1 + state.home3 + state.home5),
-        counterGoals1: (state.counterGoals1 =
-          state.away1 + state.away3 + state.away5),
-        goalDiff1: (state.goalDiff1 = state.goals1 - state.counterGoals1)
-      }));
-    };
-    this.computeValues2 = () => {
-      this.setState(state => ({
-        goals2: (state.goals2 = state.away1 + state.home4 + state.home6),
-        counterGoals2: (state.counterGoals2 =
-          state.home1 + state.away4 + state.away6),
-        goalDiff2: (state.goalDiff2 = state.goals2 - state.counterGoals2)
-      }));
-    };
-    this.computeValues3 = () => {
-      this.setState(state => ({
-        goals3: (state.goals3 = state.home2 + state.away3 + state.away6),
-        counterGoals3: (state.counterGoals3 =
-          state.away2 + state.home3 + state.home6),
-        goalDiff3: (state.goalDiff3 = state.goals3 - state.counterGoals3)
-      }));
-    };
-    this.computeValues4 = () => {
-      this.setState(state => ({
-        goals4: (state.goals1 = state.away2 + state.away4 + state.away5),
-        counterGoals4: (state.counterGoals4 =
-          state.home2 + state.home4 + state.home5),
-        goalDiff4: (state.goalDiff4 = state.goals4 - state.counterGoals4)
-      }));
-    };
+    //var tablePoints = computeTable(result1, result2, result3, result4, result5, result6);
+    //console.log(tablePoints);
   }
 
   render() {
@@ -543,3 +528,6 @@ const domContainerValueG = document.querySelector("#valuesG");
 ReactDOM.render(React.createElement(TableValues), domContainerValueG);
 const domContainerValueH = document.querySelector("#valuesH");
 ReactDOM.render(React.createElement(TableValues), domContainerValueH);
+
+//const domContainerCountriesA = document.querySelector("#countriesA");
+//ReactDOM.render(React.createElement(),domContainerCountriesA);
