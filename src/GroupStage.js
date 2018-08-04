@@ -116,11 +116,13 @@ export class GroupPhase extends React.Component {
                     [home ? "home" : "away"]: home
                       ? {
                           team: match.home.team,
-                          score: Math.max(scoreUpdater(match.home.score), 0)
+                          score: Math.max(scoreUpdater(match.home.score), 0),
+                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                       : {
                           team: match.away.team,
-                          score: Math.max(scoreUpdater(match.away.score), 0)
+                          score: Math.max(scoreUpdater(match.away.score), 0),                          
+                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                   };
                 } else {
@@ -143,11 +145,13 @@ export class GroupPhase extends React.Component {
                     [home ? "home" : "away"]: home
                       ? {
                           team: match.home.team,
-                          score: Math.max(scoreUpdater(match.home.score), 0)
+                          score: Math.max(scoreUpdater(match.home.score), 0),
+                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                       : {
                           team: match.away.team,
-                          score: Math.max(scoreUpdater(match.away.score), 0)
+                          score: Math.max(scoreUpdater(match.away.score), 0),                          
+                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                   };
                 } else {
@@ -170,11 +174,13 @@ export class GroupPhase extends React.Component {
                     [home ? "home" : "away"]: home
                       ? {
                           team: match.home.team,
-                          score: Math.max(scoreUpdater(match.home.score), 0)
+                          score: Math.max(scoreUpdater(match.home.score), 0),                          
+                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                       : {
                           team: match.away.team,
-                          score: Math.max(scoreUpdater(match.away.score), 0)
+                          score: Math.max(scoreUpdater(match.away.score), 0),                          
+                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                   };
                 } else {
@@ -188,10 +194,16 @@ export class GroupPhase extends React.Component {
         })
       };
     });
+  //pointsAD = this.compareGoals(matchScoresAD.match.home.score);
+  //console.log(pointsAD);
+  console.log(this.state.matchScoresAD.match.points); //match soll undefined sein?!
   };
 
   increaseMatchScore = this.updateMatchScore(score => score + 1);
   decreaseMatchScore = this.updateMatchScore(score => score - 1);
+
+  //pointsAD = this.compareGoals(matchScoresAD.match.home.score);
+  //console.log(pointsAD);
 
   render() {
     const { matchScoresAD, matchScoresEH, matchScoresAF } = this.state;

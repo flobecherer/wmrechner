@@ -6,6 +6,7 @@ export class KOStage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    //Exakt gleicher Code funktioniert in GroupStage.js, aber wenn er modular eingefügt wird nicht
     this.state = {
       matchScoresAF: round16.map(round16 => {
         return {
