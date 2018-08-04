@@ -86,36 +86,3 @@ h1 {
   border: 1px solid black;
   border-radius: 5px;
 }
-
-/*Spiele im Viertelfinale*/
-.qf {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 60% 40%;
-  grid-template-areas: "stageGame" "stageResults";
-  margin: 3px;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-/*Spiele im Halbfinale*/
-.sf {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 60% 40%;
-  grid-template-areas: "stageGame" "stageResults";
-  margin: 3px;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-/*Spiele im Finale bzw Spiel um Platz 3*/
-.f {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 60% 40%;
-  grid-template-areas: "stageGame" "stageResults";
-  margin: 3px;
-  border: 1px solid black;
-  border-radius: 5px;
-}

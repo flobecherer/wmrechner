@@ -1,7 +1,8 @@
 import React from "react";
 import { groupsAD, groupsEH, teams, round16 } from "./database";
 import { Match } from "./Match";
-//import { compareGoals } from "./compareGoals";
+import { KOStage } from "./KOStage";
+import { compareGoals } from "./compareGoals";
 
 export class GroupPhase extends React.Component {
   constructor(props, context) {
@@ -61,7 +62,43 @@ export class GroupPhase extends React.Component {
             };
           })
         };
-      })
+      }),
+      /*matchScoresVF: quartelfinal.map(quartelfinal => {
+        return {
+          name: quartelfinal.name,
+          matches: quartelfinal.matches.map(match => {
+            return {
+              id: match.name,
+              home: {
+                team: teams.find(team => team.id === match.home_team),
+                score: 0
+              },
+              away: {
+                team: teams.find(team => team.id === match.away_team),
+                score: 0
+              }
+            };
+          })
+        };
+      }),
+      matchScoresHF: semifinal.map(semifinal => {
+        return {
+          name: semifinal.name,
+          matches: semifinal.matches.map(match => {
+            return {
+              id: match.name,
+              home: {
+                team: teams.find(team => team.id === match.home_team),
+                score: 0
+              },
+              away: {
+                team: teams.find(team => team.id === match.away_team),
+                score: 0
+              }
+            };
+          })
+        };
+      })*/
     };
   }
 
@@ -149,19 +186,6 @@ export class GroupPhase extends React.Component {
             return round16;
           }
         })
-        // Gruppensieger mit max points
-        //groupWinner: state.matchScoresAD.map(group => {
-        //  if (groupName === group.name) {
-        //    return {
-        //      ...group,
-        //      matches: group.matches.map(match => {
-        //        if (matchId === match.id) {
-        //          return {
-        //            ...match,
-
-        //    }
-        //  }
-        //})
       };
     });
   };
@@ -251,7 +275,7 @@ export class GroupPhase extends React.Component {
 
         <div className="stage">
           <h3>Achtelfinale</h3>
-          {/*koStage einbinden mit <KOStage ..../>*/}
+          {/*<KOStage*/}
           {matchScoresAF.map(round16 => {
             return (
               <div className="r16" key={round16.name}>
@@ -284,6 +308,7 @@ export class GroupPhase extends React.Component {
               </div>
             );
           })}
+          {/*/>*/}
         </div>
       </div>
     );

@@ -1,7 +1,9 @@
 import { GroupPhase } from "./GroupStage";
+import { Match } from "./Match";
 
 //compareGoals überprüft, welches Team wie viele Punkte erhält
 export function compareGoals(home, away) {
+    console.log("test " + home, away);
   if (home > away) {
     return { scoreHome: 3, scoreAway: 0 };
   } else if (home === away) {

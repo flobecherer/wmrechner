@@ -14,6 +14,7 @@ const Team = ({ name, flag, goals }) => {
 export const Match = ({
   home,
   away,
+  points,
   increaseHome,
   increaseAway,
   decreaseHome,

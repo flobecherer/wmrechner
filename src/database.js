@@ -525,3 +525,75 @@ export const round16 = [
     ]
   }
 ];
+
+export const quartelfinal = [
+  {
+    name: "Viertelfinale",
+    matches: [
+      {
+        name: 57,
+        home_team: 4, //AF2,
+        away_team: 9 //AF1
+      },
+      {
+        name: 58,
+        home_team: 17, //AF5,
+        away_team: 25 //AF6
+      },
+      {
+        name: 59,
+        home_team: 23, //AF7,
+        away_team: 28 //AF8
+      },
+      {
+        name: 60,
+        home_team: 1, //AF3,
+        away_team: 15 //AF4
+      }
+    ]
+  }
+];
+
+export const semifinal = [
+  {
+    name: "Halbfinale",
+    matches: [
+      {
+        name: 61,
+        home_team: 9, //VF1,
+        away_team: 25 //VF2
+      },
+      {
+        name: 62,
+        home_team: 15, //VF4,
+        away_team: 28 //VF3
+      }
+    ]
+  }
+];
+
+export const thirdPlace = [
+  {
+    name: "Spiel um Platz 3",
+    matches: [
+      {
+        name: 63,
+        home_team: 25, //VF1,
+        away_team: 28 //VF2
+      }
+    ]
+  }
+];
+
+export const final = [
+  {
+    name: "Finale",
+    matches: [
+      {
+        name: 64,
+        home_team: 9,
+        away_team: 15
+      }
+    ]
+  }
+];

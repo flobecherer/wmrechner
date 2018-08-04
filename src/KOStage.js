@@ -12,7 +12,6 @@ export class KOStage extends React.Component {
           matches: round16.map(match => {
             return {
               id: match.name,
-              // TODO: SiegerTeam finden
               home: {
                 team: teams.find(team => team.id === match.home_team),
                 score: 0
