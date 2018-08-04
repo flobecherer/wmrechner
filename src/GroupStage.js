@@ -1,6 +1,7 @@
 import React from "react";
-import { groupsAD, groupsEH, teams } from "./database";
+import { groupsAD, groupsEH, teams, round16 } from "./database";
 import { Match } from "./Match";
+//import { compareGoals } from "./compareGoals";
 
 export class GroupPhase extends React.Component {
   constructor(props, context) {
@@ -42,6 +43,24 @@ export class GroupPhase extends React.Component {
             };
           })
         };
+      }),
+      matchScoresAF: round16.map(round16 => {
+        return {
+          name: round16.name,
+          matches: round16.matches.map(match => {
+            return {
+              id: match.name,
+              home: {
+                team: teams.find(team => team.id === match.home_team),
+                score: 0
+              },
+              away: {
+                team: teams.find(team => team.id === match.away_team),
+                score: 0
+              }
+            };
+          })
+        };
       })
     };
   }
@@ -49,7 +68,7 @@ export class GroupPhase extends React.Component {
   updateMatchScore = scoreUpdater => ({ groupName, matchId, home }) => () => {
     this.setState(state => {
       return {
-        matchScores: state.matchScores.map(group => {
+        matchScoresAD: state.matchScoresAD.map(group => {
           if (groupName === group.name) {
             return {
               ...group,
@@ -75,7 +94,74 @@ export class GroupPhase extends React.Component {
           } else {
             return group;
           }
+        }),
+        matchScoresEH: state.matchScoresEH.map(group => {
+          if (groupName === group.name) {
+            return {
+              ...group,
+              matches: group.matches.map(match => {
+                if (matchId === match.id) {
+                  return {
+                    ...match,
+                    [home ? "home" : "away"]: home
+                      ? {
+                          team: match.home.team,
+                          score: Math.max(scoreUpdater(match.home.score), 0)
+                        }
+                      : {
+                          team: match.away.team,
+                          score: Math.max(scoreUpdater(match.away.score), 0)
+                        }
+                  };
+                } else {
+                  return match;
+                }
+              })
+            };
+          } else {
+            return group;
+          }
+        }),
+        matchScoresAF: state.matchScoresAF.map(round16 => {
+          if (groupName === round16.name) {
+            return {
+              ...round16,
+              matches: round16.matches.map(match => {
+                if (matchId === match.id) {
+                  return {
+                    ...match,
+                    [home ? "home" : "away"]: home
+                      ? {
+                          team: match.home.team,
+                          score: Math.max(scoreUpdater(match.home.score), 0)
+                        }
+                      : {
+                          team: match.away.team,
+                          score: Math.max(scoreUpdater(match.away.score), 0)
+                        }
+                  };
+                } else {
+                  return match;
+                }
+              })
+            };
+          } else {
+            return round16;
+          }
         })
+        // Gruppensieger mit max points
+        //groupWinner: state.matchScoresAD.map(group => {
+        //  if (groupName === group.name) {
+        //    return {
+        //      ...group,
+        //      matches: group.matches.map(match => {
+        //        if (matchId === match.id) {
+        //          return {
+        //            ...match,
+
+        //    }
+        //  }
+        //})
       };
     });
   };
@@ -84,82 +170,121 @@ export class GroupPhase extends React.Component {
   decreaseMatchScore = this.updateMatchScore(score => score - 1);
 
   render() {
-    const { matchScoresAD, matchScoresEH } = this.state;
+    const { matchScoresAD, matchScoresEH, matchScoresAF } = this.state;
     return (
-      <div className="groupStage">
-        <div className="headGroupStage">
-          <h3>Gruppenphase</h3>
+      <div className="tournament">
+        <div className="groupStage">
+          <div className="headGroupStage">
+            <h3>Gruppenphase</h3>
+          </div>
+          {matchScoresAD.map(group => {
+            return (
+              <div className="groupAD" key={group.name}>
+                <b>{group.name}</b>
+                <div>
+                  {group.matches.map(match => (
+                    <Match
+                      home={match.home}
+                      away={match.away}
+                      increaseHome={this.increaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: true
+                      })}
+                      increaseAway={this.increaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: false
+                      })}
+                      decreaseHome={this.decreaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: true
+                      })}
+                      decreaseAway={this.decreaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: false
+                      })}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+          {matchScoresEH.map(group => {
+            return (
+              <div className="groupEH" key={group.name}>
+                <b>{group.name}</b>
+                <div>
+                  {group.matches.map(match => (
+                    <Match
+                      home={match.home}
+                      away={match.away}
+                      increaseHome={this.increaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: true
+                      })}
+                      increaseAway={this.increaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: false
+                      })}
+                      decreaseHome={this.decreaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: true
+                      })}
+                      decreaseAway={this.decreaseMatchScore({
+                        groupName: group.name,
+                        matchId: match.id,
+                        home: false
+                      })}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
-        {matchScoresAD.map(group => {
-          return (
-            <div className="groupAD" key={group.name}>
-              <b>{group.name}</b>
-              <div>
-                {group.matches.map(match => (
+
+        <div className="stage">
+          <h3>Achtelfinale</h3>
+          {/*koStage einbinden mit <KOStage ..../>*/}
+          {matchScoresAF.map(round16 => {
+            return (
+              <div className="r16" key={round16.name}>
+                {round16.matches.map(match => (
                   <Match
                     home={match.home}
                     away={match.away}
                     increaseHome={this.increaseMatchScore({
-                      groupName: group.name,
+                      groupName: round16.name,
                       matchId: match.id,
                       home: true
                     })}
                     increaseAway={this.increaseMatchScore({
-                      groupName: group.name,
+                      groupName: round16.name,
                       matchId: match.id,
                       home: false
                     })}
                     decreaseHome={this.decreaseMatchScore({
-                      groupName: group.name,
+                      groupName: round16.name,
                       matchId: match.id,
                       home: true
                     })}
                     decreaseAway={this.decreaseMatchScore({
-                      groupName: group.name,
+                      groupName: round16.name,
                       matchId: match.id,
                       home: false
                     })}
                   />
                 ))}
               </div>
-            </div>
-          );
-        })}
-        {matchScoresEH.map(group => {
-          return (
-            <div className="groupEH" key={group.name}>
-              <b>{group.name}</b>
-              <div>
-                {group.matches.map(match => (
-                  <Match
-                    home={match.home}
-                    away={match.away}
-                    increaseHome={this.increaseMatchScore({
-                      groupName: group.name,
-                      matchId: match.id,
-                      home: true
-                    })}
-                    increaseAway={this.increaseMatchScore({
-                      groupName: group.name,
-                      matchId: match.id,
-                      home: false
-                    })}
-                    decreaseHome={this.decreaseMatchScore({
-                      groupName: group.name,
-                      matchId: match.id,
-                      home: true
-                    })}
-                    decreaseAway={this.decreaseMatchScore({
-                      groupName: group.name,
-                      matchId: match.id,
-                      home: false
-                    })}
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     );
   }

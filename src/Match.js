@@ -20,12 +20,12 @@ export const Match = ({
   decreaseAway
 }) => {
   return (
-    <div>
+    <div className="roundrobin">
       <button onClick={increaseHome}>+</button>
-      <button onClick={decreaseHome}>-</button>
+      <button onClick={increaseAway}>+</button>
       <Team name={home.team.name} flag={home.team.flag} goals={home.score} />
       <Team name={away.team.name} flag={away.team.flag} goals={away.score} />
-      <button onClick={increaseAway}>+</button>
+      <button onClick={decreaseHome}>-</button>
       <button onClick={decreaseAway}>-</button>
     </div>
   );

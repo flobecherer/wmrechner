@@ -44,20 +44,11 @@ h1 {
   grid-column: span 8;
 }
 
-/*Turnierphase in der KO-Runde*/
-.stage {
-  text-align: center;
-  border: 1px solid black;
-  background-color: #d1ebff;
-  grid-row-start: below;
-  grid-column: span 2;
-}
-
 /*Gruppen A bis D*/
 .groupAD {
   text-align: left;
   margin: 3px;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 5px;
   grid-column: span 1;
   grid-row-start: 2;
@@ -67,78 +58,33 @@ h1 {
 .groupEH {
   text-align: left;
   margin: 3px;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 5px;
   grid-column: span 1;
   grid-row-start: 3;
 }
 
-/*Tabelle innerhalb der Gruppe*/
-.table {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "countries" "values";
-}
-
-/*Linker Teil der Tabelle*/
-.countries {
-  text-align: left;
-  grid-column-start: 1;
-  line-height: 21px;
-}
-
-/*Rechter Teil der Tabelle*/
-.values {
-  text-align: center;
-  grid-column-start: 2;
-  line-height: 21px;
-}
-
 /*Spiele innerhalb der Gruppe*/
 .roundrobin {
   display: grid;
-  grid-template-columns: 60% 40%;
-  grid-template-areas: "games" "results";
+  grid-template-columns: 1fr 1fr;
 }
 
-/*Linker Teil der Spiele*/
-.games {
-  text-align: left;
-  grid-column-start: 1;
-  line-height: 21px;
-}
-
-/*Rechter Teil der Spiele*/
-.results {
+/*Turnierphase in der KO-Runde*/
+.stage {
   text-align: center;
-  grid-column-start: 2;
-  line-height: 21px;
+  border: 2px solid black;
+  background-color: #d1ebff;
+  grid-row-start: below;
+  grid-column: span 2;
 }
 
 /*Spiele im Achtelfinale*/
 .r16 {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 60% 40%;
-  grid-template-areas: "stageGame" "stageResults";
+  text-align: left;
   margin: 3px;
   border: 1px solid black;
   border-radius: 5px;
-}
-
-/*Linker Teil des Spiels in stage (analog zu Spielen in der Gruppenphase)*/
-.stageGame {
-  text-align: left;
-  grid-column-start: 1;
-  grid-row-start: 2;
-  line-height: 21px;
-}
-
-/*Rechter Teil des Spiels in stage (analog zu Spielen in der Gruppenphase)*/
-.stageResult {
-  text-align: center;
-  grid-column-start: 2;
-  grid-row-start: 2;
 }
 
 /*Spiele im Viertelfinale*/

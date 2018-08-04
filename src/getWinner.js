@@ -1,8 +1,8 @@
 /**
-* calculates the score from the result of a game
-* @param {object} allPoints points of team 1
-* @returns {{A: string, B: string, C: string, D: string, E: string, F: string, G: string, H: string}}
-*/
+ * calculates the score from the result of a game
+ * @param {object} allPoints points of team 1
+ * @returns {{A: string, B: string, C: string, D: string, E: string, F: string, G: string, H: string}}
+ */
 
 var winnerA;
 var winnerB;
@@ -51,5 +51,14 @@ export function getWinner(allPoints) {
     winnerG = "England";
     winnerH = "Japan";
   }
-  return({ A: winnerA, B: winnerB, C: winnerC, D: winnerD, E: winnerE, F: winnerF, G: winnerG, H: winnerH })
+  return {
+    A: winnerA,
+    B: winnerB,
+    C: winnerC,
+    D: winnerD,
+    E: winnerE,
+    F: winnerF,
+    G: winnerG,
+    H: winnerH
+  };
 }

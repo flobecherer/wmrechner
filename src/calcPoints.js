@@ -1,13 +1,13 @@
 /**
-* calculates the overall score from the teams of the group
-* @param {object} result1 points of team 1
-* @param {object} result2 points of team 2
-* @param {object} result3 points of team 3
-* @param {object} result4 points of team 4
-* @param {object} result5 points of team 5
-* @param {object} result6 points of team 6
-* @returns {{scoreTeam1: number, scoreTeam2: number, scoreTeam3: number, scoreTeam4: number, groupwinner: string}}
-*/
+ * calculates the overall score from the teams of the group
+ * @param {object} result1 points of team 1
+ * @param {object} result2 points of team 2
+ * @param {object} result3 points of team 3
+ * @param {object} result4 points of team 4
+ * @param {object} result5 points of team 5
+ * @param {object} result6 points of team 6
+ * @returns {{scoreTeam1: number, scoreTeam2: number, scoreTeam3: number, scoreTeam4: number, groupwinner: string}}
+ */
 
 var pointsTeam1 = 3;
 var pointsTeam2 = 3;
@@ -34,7 +34,14 @@ var maximumPoints = 0;
 //var maxGoals = 0;
 
 //Berechnung der Summe der Punkte aus den drei Spielen pro Team
-export function computeTable(result1, result2, result3, result4, result5, result6) {
+export function computeTable(
+  result1,
+  result2,
+  result3,
+  result4,
+  result5,
+  result6
+) {
   //console.log("pointsT1G1: " + pointsTeam1Game1);
   //goalsTeam1 = home1var + home3var + home5var;
   //goalsTeam2 = away1var + home4var + home6var;
@@ -63,7 +70,13 @@ export function computeTable(result1, result2, result3, result4, result5, result
   } else if (maximumPoints === pointsTeam4) {
     groupWinner = "Team4";
   }
-  return({ scoreTeam1: pointsTeam1, scoreTeam2: pointsTeam2, scoreTeam3: pointsTeam3, scoreTeam4: pointsTeam4, groupwinner: groupWinner});
+  return {
+    scoreTeam1: pointsTeam1,
+    scoreTeam2: pointsTeam2,
+    scoreTeam3: pointsTeam3,
+    scoreTeam4: pointsTeam4,
+    groupwinner: groupWinner
+  };
   /*if (Team1.Points <= maximumPoints && Team2.Points <= maximumPoints && Team3.Points <= maximumPoints) {
       secondMaxPoints = Math.max(Team1.Points, Team2.Points, Team3.Points);
     }
