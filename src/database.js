@@ -332,11 +332,10 @@ export const groupsAD = [
         name: 40,
         home_team: 14,
         away_team: 15
-      }
+      },
+      
     ]
-  }
-];
-export const groupsEH = [
+  },
   {
     name: "Gruppe E",
     matches: [

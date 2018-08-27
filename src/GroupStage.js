@@ -27,24 +27,24 @@ export class GroupPhase extends React.Component {
           })
         };
       }),
-      matchScoresEH: groupsEH.map(group => {
-        return {
-          name: group.name,
-          matches: group.matches.map(match => {
-            return {
-              id: match.name,
-              home: {
-                team: teams.find(team => team.id === match.home_team),
-                score: 0
-              },
-              away: {
-                team: teams.find(team => team.id === match.away_team),
-                score: 0
-              }
-            };
-          })
-        };
-      }),
+      // matchScoresEH: groupsEH.map(group => {
+      //   return {
+      //     name: group.name,
+      //     matches: group.matches.map(match => {
+      //       return {
+      //         id: match.name,
+      //         home: {
+      //           team: teams.find(team => team.id === match.home_team),
+      //           score: 0
+      //         },
+      //         away: {
+      //           team: teams.find(team => team.id === match.away_team),
+      //           score: 0
+      //         }
+      //       };
+      //     })
+      //   };
+      // }),
       matchScoresAF: round16.map(round16 => {
         return {
           name: round16.name,
@@ -117,12 +117,12 @@ export class GroupPhase extends React.Component {
                       ? {
                           team: match.home.team,
                           score: Math.max(scoreUpdater(match.home.score), 0),
-                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
+                          //points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                       : {
                           team: match.away.team,
                           score: Math.max(scoreUpdater(match.away.score), 0),                          
-                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
+                          //points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
                         }
                   };
                 } else {
@@ -134,35 +134,35 @@ export class GroupPhase extends React.Component {
             return group;
           }
         }),
-        matchScoresEH: state.matchScoresEH.map(group => {
-          if (groupName === group.name) {
-            return {
-              ...group,
-              matches: group.matches.map(match => {
-                if (matchId === match.id) {
-                  return {
-                    ...match,
-                    [home ? "home" : "away"]: home
-                      ? {
-                          team: match.home.team,
-                          score: Math.max(scoreUpdater(match.home.score), 0),
-                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
-                        }
-                      : {
-                          team: match.away.team,
-                          score: Math.max(scoreUpdater(match.away.score), 0),                          
-                          points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
-                        }
-                  };
-                } else {
-                  return match;
-                }
-              })
-            };
-          } else {
-            return group;
-          }
-        }),
+        // matchScoresEH: state.matchScoresEH.map(group => {
+        //   if (groupName === group.name) {
+        //     return {
+        //       ...group,
+        //       matches: group.matches.map(match => {
+        //         if (matchId === match.id) {
+        //           return {
+        //             ...match,
+        //             [home ? "home" : "away"]: home
+        //               ? {
+        //                   team: match.home.team,
+        //                   score: Math.max(scoreUpdater(match.home.score), 0),
+        //                   points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
+        //                 }
+        //               : {
+        //                   team: match.away.team,
+        //                   score: Math.max(scoreUpdater(match.away.score), 0),                          
+        //                   points: compareGoals(match.home.score, match.away.score) //Überhaupt aufgerufen?!
+        //                 }
+        //           };
+        //         } else {
+        //           return match;
+        //         }
+        //       })
+        //     };
+        //   } else {
+        //     return group;
+        //   }
+        // }),
         matchScoresAF: state.matchScoresAF.map(round16 => {
           if (groupName === round16.name) {
             return {
@@ -196,7 +196,7 @@ export class GroupPhase extends React.Component {
     });
   //pointsAD = this.compareGoals(matchScoresAD.match.home.score);
   //console.log(pointsAD);
-  console.log(this.state.matchScoresAD.match.points); //match soll undefined sein?!
+  //console.log(this.state.matchScoresAD.match.points); //match soll undefined sein?!
   };
 
   increaseMatchScore = this.updateMatchScore(score => score + 1);
@@ -248,43 +248,7 @@ export class GroupPhase extends React.Component {
               </div>
             );
           })}
-          {matchScoresEH.map(group => {
-            return (
-              <div className="groupEH" key={group.name}>
-                <b>{group.name}</b>
-                <div>
-                  {group.matches.map(match => (
-                    <Match
-                      home={match.home}
-                      away={match.away}
-                      increaseHome={this.increaseMatchScore({
-                        groupName: group.name,
-                        matchId: match.id,
-                        home: true
-                      })}
-                      increaseAway={this.increaseMatchScore({
-                        groupName: group.name,
-                        matchId: match.id,
-                        home: false
-                      })}
-                      decreaseHome={this.decreaseMatchScore({
-                        groupName: group.name,
-                        matchId: match.id,
-                        home: true
-                      })}
-                      decreaseAway={this.decreaseMatchScore({
-                        groupName: group.name,
-                        matchId: match.id,
-                        home: false
-                      })}
-                    />
-                  ))}
-                </div>
-              </div>
-            );
-          })}
         </div>
-
         <div className="stage">
           <h3>Achtelfinale</h3>
           {/*<KOStage*/}
